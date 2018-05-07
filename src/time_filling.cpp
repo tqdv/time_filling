@@ -9,7 +9,8 @@
 	#include <QMainWindow>
 	#include <QWidget>
 	#include <QPainter>
-	#include "gui.hpp"
+    #include "controls.hpp"
+    #include "gui.hpp"
 #endif
 
 struct Options {
@@ -35,15 +36,21 @@ int main(int argc, char **argv) {
 	}
 
 #ifdef TFILL_GUI
-	std::optional<QApplication> app;
-	std::optional<Canvas> canvas;
 	if (opts.gui) {
-		app.emplace(argc, argv);
+        QApplication app(argc,argv);
+        Canvas canvas;
+        Controls controls;
 
-		canvas.emplace();
-		canvas->show();
-		canvas->resize(500, 500);
-		return app->exec();
+        QObject::connect(&controls,&Controls::fromChanged, &canvas, &Canvas::setFrom);
+        QObject::connect(&controls,&Controls::toChanged, &canvas, &Canvas::setTo);
+
+        canvas.show();
+        canvas.resize(500, 500);
+
+        controls.show();
+
+
+        return app.exec();
 	}			
 #endif
 

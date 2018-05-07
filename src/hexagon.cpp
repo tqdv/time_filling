@@ -44,10 +44,8 @@ bool hexagon_path(int from, int to, HexagonPath &path) {
 		
 	} else {
 		std::random_device rd;
-		std::minstd_rand gen;
-		gen.seed(rd());
 		std::bernoulli_distribution randbool(0.5);
-		bool first = randbool(gen);
+        bool first = randbool(rd);
 
 		if(distance == 2) { 
 			/* Randomly decide whether to go
@@ -79,9 +77,9 @@ bool hexagon_path(int from, int to, HexagonPath &path) {
 				path[5] = (path[4] + oppdir) % 6;
 			} else {
 				path[1] = (from + oppdir) % 6;
-				path[2] = (path[4] + oppdir) % 6;
+                path[2] = (path[1] + oppdir) % 6;
 				path[4] = (from + direction) % 6;
-				path[5] = (path[1] + direction)  % 6;
+                path[5] = (path[4] + direction)  % 6;
 			}
 		}
 	}
@@ -97,11 +95,11 @@ bool hexagon_positions(HexagonPath &path, const Point &center, float radius, flo
 	float angle;
 	for(int i = 0; i < 7; i++) {
 		if (path[i] == CENTER) {
-			pos[i] = center;
+            pos[i] = center;
 		} else {
 			angle = path[i] * M_PI / 3 + offset;
-			pos[i].x = radius * cos(angle);
-			pos[i].y = radius * sin(angle);
+            pos[i].x = center.x + radius * cos(angle);
+            pos[i].y = center.y + radius * sin(angle);
 		}
 	}
 

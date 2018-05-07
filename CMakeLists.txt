@@ -17,7 +17,7 @@ endif ()
 set(CMAKE_AUTOMOC ON)
 
 add_executable(tfill)
-target_sources(tfill PRIVATE src/hexagon.cpp src/time_filling.cpp src/gui.cpp)
+target_sources(tfill PRIVATE src/hexagon src/time_filling src/gui src/controls)
 target_include_directories(tfill PRIVATE src)
 
 find_package(Qt5 CONFIG REQUIRED Widgets Gui)

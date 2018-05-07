@@ -1,71 +1,76 @@
-#include <QWidget>
+#include "gui.hpp"
+#include "hexagon.hpp"
+#include <QDebug>
 #include <QPainter>
 #include <QTimer>
-#include <QDebug>
+#include <QWidget>
 #include <random>
-#include "hexagon.hpp"
-#include "gui.hpp"
-
-
 
 #include <iostream>
 
 Canvas::Canvas(QWidget *parent) : QWidget(parent) {
-	QTimer *timer = new QTimer(this);
-	timer->setInterval(1000);
-	connect(timer, SIGNAL(timeout()), this, SLOT(timedDrawEventHandler()));
-	timer->start();
-} 
+  QTimer *timer = new QTimer(this);
+  timer->setInterval(1000);
+  //	connect(timer, &QTimer::timeout, this, &Canvas::recalculatePath);
+  timer->start();
+}
 
-Canvas::~Canvas() { }
+Canvas::~Canvas() {}
+
+void Canvas::setFrom(int from) {
+  if (mFrom != from) {
+    mFrom = from;
+    recalculatePath();
+  }
+}
+
+void Canvas::setTo(int to) {
+  if (mTo != to) {
+    mTo = to;
+    recalculatePath();
+  }
+}
 
 void Canvas::drawHexagonPath(PointPath &pos) {
 
-	qDebug() << "before";
+  qDebug() << "before";
 
-	QPainter painter;
-	painter.begin(this);
-	painter.setPen(Qt::green);
-	painter.setRenderHint(QPainter::Antialiasing);
+  QPainter painter(this);
+  painter.setPen(Qt::green);
+  painter.setRenderHint(QPainter::Antialiasing);
 
-	qDebug() << "between";
+  qDebug() << "between";
 
-	QPointF p1, p2;
-	p1 = QPointF((qreal) pos[0].x, (qreal) pos[0].y);
-	for (int j = 1; j < 7; j++) {
-		p2 = QPointF((qreal) pos[j].x, (qreal) pos[j].y);
-		painter.drawLine(p1, p2);
-		p1 = std::move(p2);
-	}
-	//this->update();
-	
-	painter.end();
-	qDebug() << "after";
+  QPointF p1, p2;
+  p1 = QPointF((qreal)pos[0].x, (qreal)pos[0].y);
+  for (int j = 1; j < 7; j++) {
+    p2 = QPointF((qreal)pos[j].x, (qreal)pos[j].y);
+    painter.drawLine(p1, p2);
+    p1 = std::move(p2);
+  }
+  // this->update();
+
+  qDebug() << "after";
 }
 
+void Canvas::paintEvent(QPaintEvent *ev) { drawHexagonPath(mLastPath); }
 
 /* To improve and move */
-void Canvas::timedDrawEventHandler() {
+void Canvas::recalculatePath() {
 
-	std::cout << "hi";
+  std::cout << "hi";
 
-	std::random_device rd;
-	std::minstd_rand gen;
-	gen.seed(rd());
-	HexagonPath path;
-	PointPath pos;
-	Point center = {5.0, 5.0};
-	int from, to;
-	bool status;
+  std::random_device rd;
+  std::minstd_rand gen;
+  gen.seed(rd());
+  HexagonPath path;
+  bool status;
 
-	from = gen() % 7;
-	to = gen() % 7;
+  status = hexagon_path(mFrom, mTo, path);
 
-	status = hexagon_path(from, to, path);
-
-	if (status) {
-		status = hexagon_positions(path, center, 5.0, 0.0, pos);
-		this->drawHexagonPath(pos);
-	}
+  if (!status)
+    return;
+  status = hexagon_positions(path, {float(width() / 2.0), float(height() / 2.0)},
+                             qMin(width(), height()) / 2.0, 0.0, mLastPath);
+  update();
 }
-

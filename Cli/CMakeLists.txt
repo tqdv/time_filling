@@ -1,0 +1,2 @@
+add_executable(tfill time_filling)
+target_link_libraries(tfill tfill_pathfinder)

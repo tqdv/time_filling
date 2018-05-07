@@ -2,6 +2,7 @@
 #define HEXAGON_H
 
 // v to move somewhere
+#include <array>
 #include <iostream>
 
 typedef struct Point {

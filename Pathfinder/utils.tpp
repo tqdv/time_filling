@@ -1,11 +1,13 @@
-#include <array>
 #include <iostream>
+#include <vector>
 
-template <std::size_t N>
-void print_array (const std::array<int, N> &a) {
+template <typename T>
+void print_vector (const std::vector<T> &v) {
+	int n = v.size ();
+
 	std::cout << "[";
-	for (int i = 0; i < N - 1; i++) {
-		std::cout << a[i] << ", ";
+	for (int i = 0; i < n - 1; ++i) {
+		std::cout << v[i] << ", ";
 	}
-	std::cout << a[N - 1] << "]";
+	std::cout << v[n - 1] << "]";
 }

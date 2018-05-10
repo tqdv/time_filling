@@ -1,5 +1,6 @@
 #include <getopt.h>  // currently unused
 #include <iostream>
+#include <optional>
 #include <random>
 
 #include "hexagon.hpp"
@@ -10,24 +11,20 @@ int main (int argc, char **argv) {
 	std::minstd_rand gen;
 	gen.seed (rd ());
 
-	HexagonPath path;
-	PointPath pos;
+	std::optional<Path> path;
 	int from, to;
-	bool status;
 
 	for (int i = 0; i < 10; i++) {
 
 		from = gen () % 7;
 		to = gen () % 7;
+		path = shape_path (hexagon, from, to);
 
-		status = hexagon_path (from, to, path);
-
-		if (status) {
-			print_array (path);
-			std::cout << std::endl;
+		if (path.has_value ()) {
+			print_vector (*path);
+			std::cout << '\n';
 		} else {
-			std::cout << "Path not found from " << from << " to " << to
-			          << std::endl;
+			std::cout << "Path not found from " << from << " to " << to << '\n';
 		}
 	}
 

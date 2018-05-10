@@ -1,11 +1,11 @@
 #ifndef TFILL_UTILS_HPP
 #define TFILL_UTILS_HPP
 
-#include <array>
+#include <vector>
 
-template <std::size_t N>
-void print_array (const std::array<int, N> &a);
-/* Pretty prints an int array */
+template <typename T>
+void print_vector (const std::vector<T> &v);
+/* Pretty prints a vector */
 
 #include "utils.tpp"
 

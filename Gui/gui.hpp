@@ -25,7 +25,7 @@ class Canvas : public QWidget {
 	void recalculatePath ();
 
   private:
-	void drawHexagonPath (PointPath &pos);
+	void drawHexagonPath (const PointPath &pos);
 	void paintEvent (QPaintEvent *ev);
 };
 

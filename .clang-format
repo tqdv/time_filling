@@ -1,0 +1,129 @@
+---
+Language:        Cpp
+#Standard:        Cpp17
+# BasedOnStyle:  LLVM
+#
+AccessModifierOffset: -2
+AlignAfterOpenBracket: DontAlign
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlines: DontAlign
+AlignOperands: true
+AlignTrailingComments: false
+AllowAllParametersOfDeclarationOnNextLine: true
+
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline  # I think
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false  # Dunno
+
+#AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: true
+AlwaysBreakTemplateDeclarations: true
+
+BinPackArguments: true
+BinPackParameters: true
+
+BraceWrapping:   
+  AfterClass:      false
+  AfterControlStatement: false
+  AfterEnum:       false
+  AfterFunction:   false
+  AfterNamespace:  false
+  AfterObjCDeclaration: false
+  AfterStruct:     false
+  AfterUnion:      false
+  AfterExternBlock: false
+  BeforeCatch:     false
+  BeforeElse:      false
+  IndentBraces:    false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+
+BreakBeforeBinaryOperators: All
+BreakBeforeBraces: Attach
+BreakBeforeInheritanceComma: false
+BreakBeforeTernaryOperators: true
+#BreakConstructorInitializersBeforeComma: false
+BreakConstructorInitializers: AfterColon  # Maybe?
+BreakStringLiterals: true
+ColumnLimit: 80
+#CommentPragmas:  '^ IWYU pragma:'
+
+CompactNamespaces: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 3
+Cpp11BracedListStyle: true
+
+DerivePointerAlignment: false
+DisableFormat: false
+FixNamespaceComments: true
+
+# v Default
+ForEachMacros:   
+  - foreach
+  - Q_FOREACH
+  - BOOST_FOREACH
+# ^ Default
+
+IncludeBlocks: Preserve
+IncludeCategories: 
+  - Regex:           '^<'
+    Priority:        1
+  - Regex:           '^"'
+    Priority:        2
+IncludeIsMainRegex: '(\.test)?$'  # Maybe?
+
+IndentCaseLabels: false
+IndentPPDirectives: AfterHash  # Maybe?
+IndentWidth: 4
+IndentWrappedFunctionNames: false
+
+#JavaScriptQuotes: Leave
+#JavaScriptWrapImports: true
+
+KeepEmptyLinesAtTheStartOfBlocks: true  # Probably
+#MacroBlockBegin: ''
+#MacroBlockEnd:   ''
+MaxEmptyLinesToKeep: 1  # Maybe 2 if it also applies to space between functions
+NamespaceIndentation: Inner  # Maybe?
+
+# v Default LLVM standards
+PenaltyBreakAssignment: 2
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyExcessCharacter: 1000000
+PenaltyReturnTypeOnItsOwnLine: 60
+# ^
+
+PointerAlignment: Right
+#RawStringFormats:
+ReflowComments: false  # Write good comments to begin with
+
+SortIncludes: true
+SortUsingDeclarations: true
+
+SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: true
+SpaceBeforeAssignmentOperators: true
+#SpaceBeforeCtorInitializerColon: true  # bug??
+#SpaceBeforeInheritanceColon: true  # bug??
+SpaceBeforeParens: Always  # Even after function names
+#SpaceBeforeRangeBasedForLoopColon: true  # bug??
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 2
+SpacesInAngles: false  # Unsure
+SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+TabWidth: 4
+UseTab: ForIndentation
+...

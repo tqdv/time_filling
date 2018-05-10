@@ -3,17 +3,16 @@
 
 #include <QWidget>
 
-class Controls : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit Controls(QWidget *parent = nullptr);
+class Controls : public QWidget {
+	Q_OBJECT
+  public:
+	explicit Controls (QWidget *parent = nullptr);
 
-signals:
-    void fromChanged(int from);
-    void toChanged(int to);
+  signals:
+	void fromChanged (int from);
+	void toChanged (int to);
 
-public slots:
+  public slots:
 };
 
-#endif // CONTROLS_HPP
+#endif  // CONTROLS_HPP

@@ -1,32 +1,32 @@
 #ifndef TFILL_GUI_H
 #define TFILL_GUI_H
 
-#include <QWidget>
 #include <QPainter>
+#include <QWidget>
 #include "hexagon.hpp"
 
 class Canvas : public QWidget {
-    Q_OBJECT
+	Q_OBJECT
 
-    PointPath mLastPath;
+	PointPath mLastPath;
 
-    int mFrom;
-    int mTo;
+	int mFrom;
+	int mTo;
 
-public:
-    Canvas(QWidget *parent = 0);
-    ~Canvas();
+  public:
+	Canvas (QWidget *parent = 0);
+	~Canvas ();
 
-public slots:
-    void setFrom(int from);
-    void setTo(int to);
+  public slots:
+	void setFrom (int from);
+	void setTo (int to);
 
-private slots:
-    void recalculatePath();
+  private slots:
+	void recalculatePath ();
 
-private:
-    void drawHexagonPath(PointPath &pos);
-    void paintEvent(QPaintEvent *ev);
+  private:
+	void drawHexagonPath (PointPath &pos);
+	void paintEvent (QPaintEvent *ev);
 };
 
 #endif

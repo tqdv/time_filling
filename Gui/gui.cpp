@@ -6,7 +6,7 @@
 #include <QWidget>
 #include <random>
 
-#include "hexagon.hpp"
+#include "shapes.hpp"
 
 Canvas::Canvas (QWidget *parent) : QWidget (parent) {
 	QTimer *timer = new QTimer (this);
@@ -60,7 +60,7 @@ void Canvas::recalculatePath () {
 	float radius = qMin (width (), height ()) / 2.0;
 
 	std::optional<PointPath> pos
-	   = shape_positions (hexagon, mFrom, mTo, center, radius, 0.0);
+	   = shape_positions ({hexagon, radius, 0.0}, mFrom, mTo, center);
 
 	if (!pos.has_value ()) {
 		return;

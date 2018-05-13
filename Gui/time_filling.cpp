@@ -7,7 +7,7 @@
 
 #include "controls.hpp"
 #include "gui.hpp"
-#include "hexagon.hpp"
+#include "shapes.hpp"
 
 int main (int argc, char **argv) {
 	QApplication app (argc, argv);

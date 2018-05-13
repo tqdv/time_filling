@@ -3,7 +3,7 @@
 
 #include <QPainter>
 #include <QWidget>
-#include "hexagon.hpp"
+#include "shapes.hpp"
 
 class Canvas : public QWidget {
 	Q_OBJECT

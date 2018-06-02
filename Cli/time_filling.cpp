@@ -1,32 +1,28 @@
 #include <getopt.h>  // currently unused
 #include <iostream>
 #include <optional>
+#include <vector>
 #include <random>
+#include <cmath>
 
 #include "hexagon.hpp"
 #include "utils.hpp"
 
 int main (int argc, char **argv) {
-	std::random_device rd;
-	std::minstd_rand gen;
-	gen.seed (rd ());
+	using std::sqrt;
+	const float a = 5;
 
-	std::optional<Path> path;
-	int from, to;
+	Maybe<Hexagon> outer = Hexagon::make_hexagon (a * (1 + sqrt (3)), M_PI / 6);
+	Maybe<Hexagon> inner = Hexagon::make_hexagon (a, 0);
+	if (!outer.has_value() || !inner.has_value()) { return -1; }
 
-	for (int i = 0; i < 10; i++) {
+	std::vector<Shape*> shapes {&(*outer), &(*inner)};
 
-		from = gen () % 7;
-		to = gen () % 7;
-		path = shape_path (hexagon, from, to);
+	Maybe<PointPath> pos = shapes_positions (shapes, {5 * a, 5 * a}, {});
+	if (!pos.has_value()) {return -1; }
 
-		if (path.has_value ()) {
-			print_vector (*path);
-			std::cout << '\n';
-		} else {
-			std::cout << "Path not found from " << from << " to " << to << '\n';
-		}
-	}
+	print_vector (*pos);
+	std::cout << "\n";
 
 	return 0;
 }

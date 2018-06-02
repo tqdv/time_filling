@@ -15,6 +15,6 @@ template <typename T>
 void print_vector (const std::vector<T> &v);
 /* Pretty prints a vector */
 
-#include "utils.tpp"
+#include "utils.ipp"
 
 #endif  // TFILL_UTILS_HPP

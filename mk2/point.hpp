@@ -29,7 +29,17 @@ struct HexPoint {
 	operator Point ();
 };
 
+/* The difference between Coord and HexPoint is that the former represents
+ * coordinates in any 2D basis, whereas HexPoint represents them
+ * in the Hexagonal 2D basis defined above */
 using Coord = std::pair<int, int>;
+Coord operator+ (cr <Coord>, cr <Coord>);
+Coord operator- (cr <Coord>, cr <Coord>);
+Coord operator* (cr <Coord>, cr <int>);
+Coord operator* (cr <int> a, cr <Coord> b) { return b * a; }
+int norm (cr <Coord>);
+
+using Coord2 = std::pair<Coord, Coord>;
 
 } // namespace t_fl
 

@@ -5,6 +5,8 @@ using std::sqrt;
 
 namespace t_fl {
 
+/* Point */
+
 Point::Point (Real x, Real y) : x(x), y(y) { }
 
 /* Maybe this fails because of namespacing */
@@ -13,6 +15,8 @@ std::ostream& operator<< (std::ostream &out, cr<Point> p) {
 	return out;
 }
 
+/* HexPoint */
+
 HexPoint::HexPoint (int x, int y) : x(x), y(y) { }
 
 HexPoint::operator Point () {
@@ -20,6 +24,30 @@ HexPoint::operator Point () {
 	Real yy = y;
 	/* Base vectors are (1, 0) and (1/2, sqrt(3)/2) */
 	return Point (xx + yy / 2, sqrt(3) / 2 * yy);
+}
+
+/* Coord */
+
+Coord operator+ (cr <Coord> a, cr <Coord> b) {
+	const auto &[ax, ay] = a;
+	const auto &[bx, by] = b;
+	return Coord (ax + bx, ay+ by);
+}
+
+Coord operator- (cr <Coord> l, cr <Coord> r) {
+	const auto &[lx, ly] = l;
+	const auto &[rx, ry] = r;
+	return Coord (lx - rx, ly - ry);
+}
+
+Coord operator* (cr <Coord> a, cr <int> b) {
+	const auto &[x, y] = a;
+	return Coord (b * x, b * y);
+}
+
+int norm (cr <Coord> c) {
+	const auto &[x, y] = c;
+	return x + y;
 }
 
 }  // namespace t_fl

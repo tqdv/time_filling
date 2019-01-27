@@ -2,6 +2,7 @@
 #include <cmath>
 
 using std::sqrt;
+using std::abs;
 
 namespace t_fl {
 
@@ -47,7 +48,7 @@ Coord operator* (cr <Coord> a, cr <int> b) {
 
 int norm (cr <Coord> c) {
 	const auto &[x, y] = c;
-	return x + y;
+	return abs(x) + abs(y);
 }
 
 }  // namespace t_fl

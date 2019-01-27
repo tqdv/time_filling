@@ -20,31 +20,60 @@ void init_default_base(int n) {
 	}
 }
 
+Coord lower (cr <Coord> c, int s) {
+	const auto &[x, y] = c;
+	const auto &[cx, cy] = bases[s];
+
+	return x * cx + y * cy;
+}
+
 /* Hexagon */
 
 Hexagon::Hexagon (Coord c, int s) : center (c), size (s) { }
 
-Hexagon::operator HexPoint () {
-	auto [x, y] = center;
-	Coord c;
+Hexagon_v Hexagon::explode () {
+	/* We assume $size > 0 */
+	Hexagon_v v;
+	v.reserve(7);
 
-	for (int i = size; i > 0; i--) {
-		const auto &[cx, cy] = bases[i];
-		c = x * cx + y * cy;
-		auto [x, y] = c;
-	}
+	cr <Coord> c = lower(center, size);
 
-	return HexPoint (x, y);
+	int s = size - 1;
+	auto f = [&c, s] (int x, int y) { return Hexagon (c + Coord(x, y), s); };
+	v[0] = f (0, 0);
+	v[1] = f (1, 0);
+	v[2] = f (0, 1);
+	v[3] = f (-1, 1);
+	v[4] = f (-1, 0);
+	v[5] = f (0, -1);
+	v[6] = f (2, -1);
+
+	return v;
 }
 
+Hexagon::operator HexPoint () {
+	Coord c = center;
+
+	for (int i = size; i > 0; i--) {
+		c = lower (c, i);
+	}
+
+	return HexPoint (c);
+}
+
+/* This is unused, but it's not wrong */
 Coord operator- (cr <Hexagon> left, cr <Hexagon> other) {
 	return left.center - other.center;
 }
 
 /* */
 
+int dist (cr <Hexagon> left, cr <Hexagon> right) {
+	return dist (left.center, right.center);
+}
+
 bool are_neighbours (cr <Hexagon> left,  cr <Hexagon> right) {
-	return norm (left - right) == 1;
+	return dist (left, right) == 1;
 }
 
 }  // namespace t_fl

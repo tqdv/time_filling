@@ -17,14 +17,24 @@ static std::vector<Coord2> bases;
  * That makes it so that every other base is identical */
 void init_default_base(int n);
 
+/* Get coordinates of a Coord, in the basis below */
+Coord lower (cr <Coord>, int);
+
 struct Hexagon {
+	using Hexagon_v = std::vector<Hexagon>;  // Needed because it's recursive
 	Coord center;  // depends on t_fl::bases
 	int size;  // 0 is a HexPoint
+
+	Hexagon_v explode();
 
 	Hexagon (Coord, int); 
 	operator HexPoint();
 };
 Coord operator- (cr <Hexagon>, cr <Hexagon>);
+
+using Hexagon_v = std::vector<Hexagon>;
+
+int dist (cr <Hexagon>, cr <Hexagon>);
 
 bool are_neighbours (cr <Hexagon>, cr <Hexagon>);
 

@@ -1,8 +1,10 @@
 #include "point.hpp"
 #include <cmath>
+#include <algorithm>
 
 using std::sqrt;
 using std::abs;
+using std::min;
 
 namespace t_fl {
 
@@ -29,6 +31,7 @@ HexPoint::operator Point () {
 
 /* Coord */
 
+
 Coord operator+ (cr <Coord> a, cr <Coord> b) {
 	const auto &[ax, ay] = a;
 	const auto &[bx, by] = b;
@@ -46,9 +49,25 @@ Coord operator* (cr <Coord> a, cr <int> b) {
 	return Coord (b * x, b * y);
 }
 
+Coord::operator HexPoint () {
+	const auto &[x, y] = *this;
+	return Coord (x, y);
+}
+
 int norm (cr <Coord> c) {
 	const auto &[x, y] = c;
-	return abs(x) + abs(y);
+	if (x * y >= 0) {
+		return abs (x + y);
+	} else {
+		// Consider the third axis (-1, 1)
+		return min (
+			abs (y) + abs (x + y), // Try on x
+			abs (x) + abs (x + y)); // Try on y
+	}
+}
+
+int dist (cr <Coord> left, cr <Coord> right) {
+	return norm (left - right);
 }
 
 }  // namespace t_fl

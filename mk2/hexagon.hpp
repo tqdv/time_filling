@@ -21,13 +21,16 @@ void init_default_base(int n);
 Coord lower (cr <Coord>, int);
 
 struct Hexagon {
-	using Hexagon_v = std::vector<Hexagon>;  // Needed because it's recursive
 	Coord center;  // depends on t_fl::bases
 	int size;  // 0 is a HexPoint
 
-	Hexagon_v explode();
-
+	Hexagon () {}
 	Hexagon (Coord, int); 
+
+	using Hexagon_v = std::vector<Hexagon>;  // Needed because it's recursive
+	Hexagon_v explode() const;
+	Hexagon smaller() const;
+
 	operator HexPoint();
 };
 Coord operator- (cr <Hexagon>, cr <Hexagon>);

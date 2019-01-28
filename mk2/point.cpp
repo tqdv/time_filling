@@ -29,8 +29,11 @@ HexPoint::operator Point () {
 	return Point (xx + yy / 2, sqrt(3) / 2 * yy);
 }
 
-/* Coord */
+bool operator== (cr <HexPoint> left, cr <HexPoint> right) {
+	return left.x == right.x && left.y == right.y;
+}
 
+/* Coord */
 
 Coord operator+ (cr <Coord> a, cr <Coord> b) {
 	const auto &[ax, ay] = a;

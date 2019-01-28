@@ -9,13 +9,13 @@ namespace t_fl {
 void init_default_base(int n) {
 	/* We assume n >= 0 */
 	bases.reserve(n+1);
-	bases[0] = Coord2 (Coord (1, 0), Coord (0, 1));
+	bases.push_back (Coord2 (Coord (1, 0), Coord (0, 1)));
 	
 	for (int i = 1; i <= n; i++) {
 		if (i % 2 == 1) {
-			bases[i] = Coord2 (Coord (2, 1), Coord (-1, 2));
+			bases.push_back (Coord2 (Coord (2, 1), Coord (-1, 2)));
 		} else {
-			bases[i] = Coord2 (Coord (3, -1), Coord (1, 2));
+			bases.push_back (Coord2 (Coord (3, -1), Coord (1, 2)));
 		}
 	}
 }
@@ -29,12 +29,13 @@ Coord lower (cr <Coord> c, int s) {
 
 /* Hexagon */
 
+Hexagon::Hexagon () {}
+
 Hexagon::Hexagon (Coord c, int s) : center (c), size (s) { }
 
-Hexagon_v Hexagon::explode () {
+Hexagon_v Hexagon::explode () const {
 	/* We assume $size > 0 */
-	Hexagon_v v;
-	v.reserve(7);
+	Hexagon_v v(7);
 
 	cr <Coord> c = lower(center, size);
 
@@ -49,6 +50,12 @@ Hexagon_v Hexagon::explode () {
 	v[6] = f (2, -1);
 
 	return v;
+}
+
+Hexagon Hexagon::smaller () const {
+	/* We assume that $size > 0 */
+	Coord c = lower (center, size);
+	return Hexagon (c, size -1);
 }
 
 Hexagon::operator HexPoint () {

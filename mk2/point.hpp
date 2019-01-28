@@ -25,9 +25,12 @@ struct HexPoint {
 	int x;
 	int y;
 
+	HexPoint ();
 	HexPoint (int, int);
 	operator Point ();
 };
+bool operator== (cr <HexPoint>, cr <HexPoint>);
+
 
 /* The difference between Coord and HexPoint is that the former represents
  * coordinates in any 2D basis, whereas HexPoint represents them

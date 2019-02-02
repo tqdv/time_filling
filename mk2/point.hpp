@@ -43,6 +43,7 @@ Coord operator+ (cr <Coord>, cr <Coord>);
 Coord operator- (cr <Coord>, cr <Coord>);
 Coord operator* (cr <Coord>, cr <int>);
 Coord operator* (cr <int> a, cr <Coord> b);
+/* Calculate norm as defined as … */
 int norm (cr <Coord>);
 int dist (cr <Coord>, cr <Coord>);
 

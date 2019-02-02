@@ -8,12 +8,13 @@ namespace t_fl {
 
 void init_default_base(int n) {
 	/* We assume n >= 0 */
+	bases.clear();
 	bases.reserve(n+1);
 	bases.push_back (Coord2 (Coord (1, 0), Coord (0, 1)));
 	
 	for (int i = 1; i <= n; i++) {
 		if (i % 2 == 1) {
-			bases.push_back (Coord2 (Coord (2, 1), Coord (-1, 2)));
+			bases.push_back (Coord2 (Coord (2, 1), Coord (-1, 3)));
 		} else {
 			bases.push_back (Coord2 (Coord (3, -1), Coord (1, 2)));
 		}
@@ -47,7 +48,7 @@ Hexagon_v Hexagon::explode () const {
 	v[3] = f (-1, 1);
 	v[4] = f (-1, 0);
 	v[5] = f (0, -1);
-	v[6] = f (2, -1);
+	v[6] = f (1, -1);
 
 	return v;
 }

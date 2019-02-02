@@ -27,6 +27,7 @@ struct HexPoint {
 
 	HexPoint ();
 	HexPoint (int, int);
+
 	operator Point ();
 };
 bool operator== (cr <HexPoint>, cr <HexPoint>);
@@ -36,14 +37,13 @@ bool operator== (cr <HexPoint>, cr <HexPoint>);
  * coordinates in any 2D basis, whereas HexPoint represents them
  * in the Hexagonal 2D basis defined above */
 struct Coord : public std::pair<int, int> {
-	template <typename ... Types>
-	Coord (Types ... Args) : std::pair<int, int>(Args ...) { }
+	using std::pair<int, int>::pair; // inherit constructors
 	operator HexPoint ();
 };
 Coord operator+ (cr <Coord>, cr <Coord>);
 Coord operator- (cr <Coord>, cr <Coord>);
 Coord operator* (cr <Coord>, cr <int>);
-Coord operator* (cr <int> a, cr <Coord> b) { return b * a; }
+Coord operator* (cr <int> a, cr <Coord> b);
 int norm (cr <Coord>);
 int dist (cr <Coord>, cr <Coord>);
 

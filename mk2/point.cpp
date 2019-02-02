@@ -19,6 +19,7 @@ std::ostream& operator<< (std::ostream &out, cr<Point> p) {
 }
 
 /* HexPoint */
+HexPoint::HexPoint () {};
 
 HexPoint::HexPoint (int x, int y) : x(x), y(y) { }
 
@@ -51,10 +52,11 @@ Coord operator* (cr <Coord> a, cr <int> b) {
 	const auto &[x, y] = a;
 	return Coord (b * x, b * y);
 }
+Coord operator* (cr <int> a, cr <Coord> b) { return b * a; }
 
 Coord::operator HexPoint () {
 	const auto &[x, y] = *this;
-	return Coord (x, y);
+	return HexPoint (x, y);
 }
 
 int norm (cr <Coord> c) {

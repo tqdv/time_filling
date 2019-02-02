@@ -33,7 +33,6 @@ struct Hexagon {
 
 	operator HexPoint();
 };
-Coord operator- (cr <Hexagon>, cr <Hexagon>);
 
 using Hexagon_v = std::vector<Hexagon>;
 

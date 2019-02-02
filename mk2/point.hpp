@@ -1,7 +1,6 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 
-#include <iostream>
 #include <utility> // std::pair
 #include "utils.hpp"
 

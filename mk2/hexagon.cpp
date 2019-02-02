@@ -69,11 +69,6 @@ Hexagon::operator HexPoint () {
 	return HexPoint (c);
 }
 
-/* This is unused, but it's not wrong */
-Coord operator- (cr <Hexagon> left, cr <Hexagon> other) {
-	return left.center - other.center;
-}
-
 /* */
 
 int dist (cr <Hexagon> left, cr <Hexagon> right) {

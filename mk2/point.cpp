@@ -1,9 +1,9 @@
 #include "point.hpp"
-#include <cmath>
-#include <algorithm>
 
+#include <cmath>
 using std::sqrt;
 using std::abs;
+#include <algorithm>
 using std::min;
 
 namespace t_fl {

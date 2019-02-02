@@ -20,6 +20,9 @@ struct Itinerary {
 	Endpoints ends;
 
 	Itinerary (Hexagon, Endpoints);
+	Itinerary (Hexagon);
+
+	bool is_loop() const;
 };
 
 

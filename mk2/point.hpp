@@ -33,22 +33,38 @@ struct HexPoint {
 bool operator== (cr <HexPoint>, cr <HexPoint>);
 
 
-/* The difference between Coord and HexPoint is that the former represents
+/* The difference between T_Coord and HexPoint is that the former represents
  * coordinates in any 2D basis, whereas HexPoint represents them
  * in the Hexagonal 2D basis defined above */
-struct Coord : public std::pair<int, int> {
-	using std::pair<int, int>::pair; // inherit constructors
-	operator HexPoint ();
+// We templatize Coord to use both int and float types
+template <class T> struct T_Coord : public std::pair<T, T> {
+	using std::pair<T, T>::pair; // inherit constructors
 };
-Coord operator+ (cr <Coord>, cr <Coord>);
-Coord operator- (cr <Coord>, cr <Coord>);
-Coord operator* (cr <Coord>, cr <int>);
-Coord operator* (cr <int> a, cr <Coord> b);
+
+template <class T> T_Coord operator+ (cr <T_Coord <T>>, cr <T_Coord <T>>);
+template <class T> T_Coord operator- (cr <T_Coord <T>>, cr <T_Coord <T>>);
+
+template <class T> T_Coord operator* (cr <T_Coord <T>>, cr <int>);
+template <class T> T_Coord operator* (cr <int> a, cr <T_Coord <T>> b);
+
+
+struct Coord : public T_Coord<int> {
+	using T_Coord<int>::T_Coord;
+	operator HexPoint ();
+}
+
 /* Calculate norm as defined as … */
 int norm (cr <Coord>);
 int dist (cr <Coord>, cr <Coord>);
 
 using Coord2 = std::pair<Coord, Coord>;
+
+struct FCoord : public T_Coord <float> {
+	using T_Coord <float>::T_Coord;
+
+	operator Coord ();
+}
+using FCoord2 = std::pair <FCoord, FCoord>;
 
 } // namespace t_fl
 

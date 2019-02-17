@@ -2,6 +2,7 @@
 #define POINT_HPP
 
 #include <utility> // std::pair
+#include <ostream> // friend std::ostream
 #include "utils.hpp"
 
 namespace t_fl {

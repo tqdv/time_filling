@@ -6,30 +6,14 @@ using std::list;
 #include <iterator>
 using std::next;
 #include "hexagon_ops.hpp"
+// link_betweet …
 #include "utils.hpp"
 
 namespace t_fl {
 
-/* Endpoints */
-bool Endpoints::is_loop () const {
-	return from == to;
-}
-
-/* Itinerary */
-
-Itinerary::Itinerary (Hexagon h, Endpoints e) : hex(h), ends(e) { }
-
-Itinerary::Itinerary (Hexagon h) : hex(h) { }
-
-bool Itinerary::is_loop () const {
-	return hex.size != 0 && ends.is_loop ();
-}
-
-/* */
-
 /* Assign the to be connected ends of the end of the list, given $hexs */
 /* Returns the start of the next itinerary */
-HexPoint assign_next_bridge (cr <vector <Hexagon>> hexs, list <Itinerary> &l) {
+HexPoint assign_next_bridge (cr <Hexagon_v> hexs, list <Itinerary> &l) {
 	// We assume there is an element after this one
 	auto rbegin = l.rbegin ();
 	int n = l.size ();
@@ -82,16 +66,24 @@ cout << "Filling itineraries\n";
 }
 
 
-///* Rules to simplify the hexagons */
-//
-///* Hexagon size = n -> n - 2
-// * (have the most lines on the outer to highlight the contour) */
-//std::list <Hexagon> simplify_hex2
-// (cr <Hexagon> hex, cr <Hexagon> left, cr <Hexagon> right) {
-//	if (left.size == hex.size)
-//}
-//
-///* Hexagon size = n -> n - 1 */
+/* Rules to simplify the hexagons */
 
+list <Hexagon> simplify_hex (cr <Itinerary> itin) {
+	int n = itin.hex.size;
+
+	/* Hexagon size = n -> n - 2
+	 * (have the most lines on the outer to highlight the contour) */
+	if (n >= 2) {
+		return simplify_hex2 (itin);
+	}
+
+	/* Hexagon size = n -> n - 1 */
+	return simplify_hex1 (itin);
+}
+
+std::list <Hexagon> simplify_hex1 (cr <Itinerary> itin) {
+	
+
+}
 
 } // namespace t_fl

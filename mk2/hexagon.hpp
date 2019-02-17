@@ -29,6 +29,7 @@ struct Hexagon {
 
 	Hexagon ();
 	Hexagon (Coord, int); 
+	Hexagon (HexPoint, int);
 
 	using Hexagon_v = std::vector<Hexagon>;  // Needed because it's recursive
 	/* Get children */

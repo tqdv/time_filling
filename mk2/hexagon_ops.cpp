@@ -8,6 +8,7 @@
 using std::vector;
 #include <utility>
 using std::get;
+#include "itinerary.hpp"
 
 namespace t_fl {
 
@@ -99,6 +100,14 @@ HexPoint2 link_between (cr <Hexagon> left, cr <Hexagon> right) {
 	HexPoint2 p = HexPoint2 (HexPoint(l), HexPoint(r));
 
 	return p;
+}
+
+
+list <Itinerary> simple_path (cr <Itinerary> itin) {
+	Hexagon center = itin.hex.lower ();
+	Hexagon start = Hexagon (itin.ends.from, center.size);
+	hexagon end = Hexagon (itin.ends.to, center.size);
+	// WIP
 }
 
 } // namespace t_fl

@@ -30,10 +30,6 @@ HexPoint::operator Point () {
 	return Point (xx + yy / 2, sqrt(3) / 2 * yy);
 }
 
-HexPoint::operator Coord () {
-	return Coord (*this);
-}
-
 bool operator== (cr <HexPoint> left, cr <HexPoint> right) {
 	return left.x == right.x && left.y == right.y;
 }
@@ -63,6 +59,8 @@ template <class T>
 T_Coord <T> operator* (cr <int> a, cr <T_Coord <T>> b) { return b * a; }
 
 /* Coord */
+
+Coord::Coord (HexPoint p) : T_Coord<int> (p.x, p.y) { }
 
 Coord::operator HexPoint () {
 	const auto &[x, y] = *this;

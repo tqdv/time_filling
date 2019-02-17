@@ -29,7 +29,6 @@ struct HexPoint {
 	HexPoint (int, int);
 
 	operator Point ();
-	operator Coord ();
 };
 bool operator== (cr <HexPoint>, cr <HexPoint>);
 
@@ -42,17 +41,19 @@ template <class T> struct T_Coord : public std::pair<T, T> {
 	using std::pair<T, T>::pair; // inherit constructors
 };
 
-template <class T> T_Coord operator+ (cr <T_Coord <T>>, cr <T_Coord <T>>);
-template <class T> T_Coord operator- (cr <T_Coord <T>>, cr <T_Coord <T>>);
+template <class T> T_Coord <T> operator+ (cr <T_Coord <T>>, cr <T_Coord <T>>);
+template <class T> T_Coord <T> operator- (cr <T_Coord <T>>, cr <T_Coord <T>>);
 
-template <class T> T_Coord operator* (cr <T_Coord <T>>, cr <int>);
-template <class T> T_Coord operator* (cr <int> a, cr <T_Coord <T>> b);
+template <class T> T_Coord <T> operator* (cr <T_Coord <T>>, cr <int>);
+template <class T> T_Coord <T> operator* (cr <int> a, cr <T_Coord <T>> b);
 
 
 struct Coord : public T_Coord<int> {
 	using T_Coord<int>::T_Coord;
+	Coord (HexPoint);
+
 	operator HexPoint ();
-}
+};
 
 /* Calculate norm as defined as … */
 int norm (cr <Coord>);
@@ -64,7 +65,7 @@ struct FCoord : public T_Coord <float> {
 	using T_Coord <float>::T_Coord;
 
 	operator Coord ();
-}
+};
 using FCoord2 = std::pair <FCoord, FCoord>;
 
 } // namespace t_fl

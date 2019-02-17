@@ -36,31 +36,13 @@ bool operator== (cr <HexPoint> left, cr <HexPoint> right) {
 
 /* T_Coord */
 
-template <class T>
-T_Coord <T> operator+ (cr <T_Coord <T>> a, cr <T_Coord <T>> b) {
-	const auto &[ax, ay] = a;
-	const auto &[bx, by] = b;
-	return T_Coord <T> (ax + bx, ay + by);
-}
-
-template <class T>
-T_Coord <T> operator- (cr <T_Coord <T>> l, cr <T_Coord <T>> r) {
-	const auto &[lx, ly] = l;
-	const auto &[rx, ry] = r;
-	return T_Coord <T> (lx - rx, ly - ry);
-}
-
-template <class T>
-T_Coord <T> operator* (cr <T_Coord <T>> a, cr <int> b) {
-	const auto &[x, y] = a;
-	return T_Coord <T> (b * x, b * y);
-}
-template <class T>
-T_Coord <T> operator* (cr <int> a, cr <T_Coord <T>> b) { return b * a; }
-
+// See the same section in *.tpp
+//
 /* Coord */
 
 Coord::Coord (HexPoint p) : T_Coord<int> (p.x, p.y) { }
+
+Coord::Coord (T_Coord <int> c) : T_Coord <int> (c) { }
 
 Coord::operator HexPoint () {
 	const auto &[x, y] = *this;
@@ -88,10 +70,13 @@ int dist (cr <Coord> left, cr <Coord> right) {
 
 /* FCoord */
 
+FCoord::FCoord (T_Coord <float> c) : T_Coord <float> (c) { }
+
 FCoord::operator Coord () {
 	const auto &[x, y] = *this;
 	// C++ rounds towards zero apparently. Hopefully this works
 	return Coord ((int) (x+ 0.5), (int) (y + 0.5));
 }
+
 
 }  // namespace t_fl

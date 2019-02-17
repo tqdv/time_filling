@@ -52,14 +52,12 @@ Hexagon::Hexagon (Coord c, int s) : center (c), size (s) { }
 
 Hexagon::Hexagon (HexPoint p) : center ((Coord) p), size (0) { }
 
-Hexagon::Hexagon (HexPoint p, int s) : size (s) {
+Hexagon::Hexagon (HexPoint p, int s) {
 	/* Assume s > 0 */
-	Hexagon h = (Hexagon) p;
-	while (s > h.size) {
-		h = h.bigger();
+	*this = (Hexagon) p;
+	while (this->size < s) {
+		*this = this->bigger();
 	}
-
-	return h;
 }
 
 Hexagon_v Hexagon::explode () const {

@@ -51,6 +51,7 @@ template <class T> T_Coord <T> operator* (cr <int> a, cr <T_Coord <T>> b);
 struct Coord : public T_Coord<int> {
 	using T_Coord<int>::T_Coord;
 	Coord (HexPoint);
+	Coord (T_Coord <int>);
 
 	operator HexPoint ();
 };
@@ -63,11 +64,14 @@ using Coord2 = std::pair<Coord, Coord>;
 
 struct FCoord : public T_Coord <float> {
 	using T_Coord <float>::T_Coord;
+	FCoord (T_Coord <float>);
 
 	operator Coord ();
 };
 using FCoord2 = std::pair <FCoord, FCoord>;
 
 } // namespace t_fl
+
+#include "point.tpp"
 
 #endif  // POINT_HPP

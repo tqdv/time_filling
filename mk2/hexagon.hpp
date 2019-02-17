@@ -20,6 +20,9 @@ static std::vector<Coord2> bases;
  * That makes it so that every other base is aligned */
 void init_default_base(int n);
 
+/* Inverts a base so we can go up in the base hierarchy */
+FCoord2 invert_base (Coord2);
+
 /* Get coordinates of a Coord, in the basis below */
 Coord lower (cr <Coord>, int);
 
@@ -34,8 +37,11 @@ struct Hexagon {
 	using Hexagon_v = std::vector<Hexagon>;  // Needed because it's recursive
 	/* Get children */
 	Hexagon_v explode() const;
+
 	/* Get a hexagon one size smaller with the same center */
 	Hexagon smaller() const;
+	/* Get a hexagon one size bigger which contains the previous one */
+	Hexagon bigger () const;
 
 	/* Converts the center to a HexPoint */
 	operator HexPoint();

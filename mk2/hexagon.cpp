@@ -21,6 +21,22 @@ void init_default_base(int n) {
 	}
 }
 
+FCoord2 invert_base (Coord2 base) {
+	/* We assume it is possible */
+	/*  x y
+	 * [a b]
+	 * [c d]
+	 */
+	auto [x, y] = base;
+	auto [a, c] = x;
+	auto [b, d] = y;
+	float det = a * d - c * b; // For the float conversion
+
+	return FCoord2 (
+		FCoord ( d/det, -c/det),
+		FCoord (-b/det,  a/det));
+}
+
 Coord lower (cr <Coord> c, int s) {
 	const auto &[x, y] = c;
 	const auto &[cx, cy] = bases[s];
@@ -57,6 +73,17 @@ Hexagon Hexagon::smaller () const {
 	/* We assume that $size > 0 */
 	Coord c = lower (center, size);
 	return Hexagon (c, size -1);
+}
+
+Hexagon Hexagon::bigger () const {
+	int s = size + 1;
+	const auto &[x, y] = center;
+	FCoord2 inv = invert_base (bases[s]);
+
+	const auto &[cx, cy] = inv;
+
+	FCoord c = x * cx + y * cy;
+	return Hexagon ((Coord) c, s);
 }
 
 Hexagon::operator HexPoint () {

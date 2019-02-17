@@ -11,8 +11,10 @@ int main () {
 
 
 	cout << "Simple test to see if Hexagon.explode works\n";
-	auto [x, y] = a;
-	cout << x << ", " << y << "\n";
+	for (const auto &e : v) {
+		const auto &[x, y] = e.center;
+		cout << x << ", " << y << "\n";
+	}
 
 	return 0;
 }

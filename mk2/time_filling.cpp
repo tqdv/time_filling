@@ -82,7 +82,7 @@ list <Hexagon> simplify_hex (cr <Itinerary> itin) {
 }
 
 std::list <Hexagon> simplify_hex1 (cr <Itinerary> itin) {
-	
+	// WIP
 
 }
 

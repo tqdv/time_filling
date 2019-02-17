@@ -50,6 +50,18 @@ Hexagon::Hexagon () {}
 
 Hexagon::Hexagon (Coord c, int s) : center (c), size (s) { }
 
+Hexagon::Hexagon (HexPoint p) : center ((Coord) p), size (0) { }
+
+Hexagon::Hexagon (HexPoint p, int s) : size (s) {
+	/* Assume s > 0 */
+	Hexagon h = (Hexagon) p;
+	while (s > h.size) {
+		h = h.bigger();
+	}
+
+	return h;
+}
+
 Hexagon_v Hexagon::explode () const {
 	/* We assume $size > 0 */
 	Hexagon_v v(7);
@@ -78,7 +90,7 @@ Hexagon Hexagon::smaller () const {
 Hexagon Hexagon::bigger () const {
 	int s = size + 1;
 	const auto &[x, y] = center;
-	FCoord2 inv = invert_base (bases[s]);
+	FCoord2 inv = invert_base (bases[s]); // This could be memoized
 
 	const auto &[cx, cy] = inv;
 

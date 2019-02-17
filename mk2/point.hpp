@@ -29,6 +29,7 @@ struct HexPoint {
 	HexPoint (int, int);
 
 	operator Point ();
+	operator Coord ();
 };
 bool operator== (cr <HexPoint>, cr <HexPoint>);
 

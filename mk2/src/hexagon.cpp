@@ -1,6 +1,12 @@
 #include "hexagon.hpp"
 
 #include <vector>
+#include <algorithm>
+using std::transform;
+#include <functional>
+using std::bind;
+#include <map>
+// coord_node
 #include "point.hpp"
 #include "utils.hpp"
 
@@ -106,7 +112,32 @@ Hexagon::operator HexPoint () {
 	return HexPoint (c);
 }
 
-/* */
+Coord operator- (Hexagon l, Hexagon r) {
+	return l.center - r.center;
+}
+
+Hexagon operator+ (Hexagon h, Coord c) {
+	return Hexagon (h.center + c, h.size);
+}
+Hexagon operator+ (Coord c, Hexagon h) { return h + c; }
+
+Hexagon hex_coord (cr <Hexagon> h, cr <Coord> c) {
+	return h + c;
+}
+Hexagon_v hex_coord (cr <Hexagon> h, cr <Coord_v> cs) {
+	Hexagon_v v (cs.size ());
+	using namespace std::placeholders;
+
+	auto f = bind (static_cast <Hexagon(*)(cr <Hexagon>, cr <Coord>)>
+		(hex_coord), h, _1);
+	transform (cs.begin(), cs.end(), v.begin(),
+		f);
+
+	return v;
+}
+
+
+/* Hexagon distance */
 
 int dist (cr <Hexagon> left, cr <Hexagon> right) {
 	return dist (left.center, right.center);
@@ -114,6 +145,47 @@ int dist (cr <Hexagon> left, cr <Hexagon> right) {
 
 bool are_neighbours (cr <Hexagon> left,  cr <Hexagon> right) {
 	return dist (left, right) == 1;
+}
+
+/* Node */
+
+/* Assign a number to each point in the hexagon */
+/*  2 1
+ * 3 6 0
+ *  4 5
+ */
+// The outer ring is 0..5 so you can work in mod 6
+const std::map <Coord, Node> node_coord_m {
+	{{ 1,  0}, 0},
+	{{ 0,  1}, 1},
+	{{-1,  1}, 2},
+	{{-1,  0}, 3},
+	{{ 0, -1}, 4},
+	{{ 1, -1}, 5},
+	{{ 0,  0}, 6}};
+const std::map <Node, Coord> coord_node_m {
+	{0, { 1,  0}},
+	{1, { 0,  1}},
+	{2, {-1,  1}},
+	{3, {-1,  0}},
+	{4, { 0, -1}},
+	{5, { 1, -1}},
+	{6, { 0,  0}}};
+
+Node node_coord (cr <Coord> c) {
+	return node_coord_m.at(c);  // Use .at for const correctness
+}
+Coord coord_node (cr <Node> n) {
+	return coord_node_m.at(n);
+}
+Coord_v coord_node (cr <Node_v> ns) {
+	Coord_v cs (ns.size ());
+	
+	// Choose the right overload
+	auto f = static_cast <Coord(*)(cr <Node>)> (coord_node);
+	transform (ns.begin(), ns.end(), cs.begin(), f);
+		
+	return cs;
 }
 
 }  // namespace t_fl

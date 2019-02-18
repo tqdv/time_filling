@@ -49,13 +49,33 @@ struct Hexagon {
 	operator HexPoint();
 };
 
+Coord operator- (Hexagon, Hexagon);
+Hexagon operator+ (Hexagon, Coord);
+Hexagon operator+ (Coord, Hexagon);
+
+
 using Hexagon_v = std::vector<Hexagon>;
+
+/* Create  vector of Hexagons defined by Coord_v relative to Hexagon */
+Hexagon hex_coord (cr <Hexagon>, cr <Coord>);
+Hexagon_v hex_coord (cr <Hexagon>, cr <Coord_v>);
 
 /* Distance between the two hexagon centers, assuming they are the same size */
 int dist (cr <Hexagon>, cr <Hexagon>);
 
 /* Whether the hexagons are neighbours, assuming they are the same size */
 bool are_neighbours (cr <Hexagon>, cr <Hexagon>);
+
+
+/* A Node is anumber assigned to one of the 7 hexagons that make up a bigger
+ * hexagon */
+using Node = int;
+using Node_v = std::vector <Node>;
+
+/* Conversions between Coords and Nodes */
+Node node_coord (cr <Coord>);
+Coord coord_node (cr <Node>);
+Coord_v coord_node (cr <Node_v>);
 
 }  // namespace t_fl
 

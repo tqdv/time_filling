@@ -3,6 +3,7 @@
 
 #include <utility> // std::pair
 #include <ostream> // friend std::ostream
+#include <vector> // Coord_v
 #include "utils.hpp"
 
 namespace t_fl {
@@ -54,6 +55,7 @@ struct Coord : public T_Coord<int> {
 	Coord (T_Coord <int>);
 
 	operator HexPoint ();
+
 };
 
 /* Calculate norm as defined as … */
@@ -61,6 +63,7 @@ int norm (cr <Coord>);
 int dist (cr <Coord>, cr <Coord>);
 
 using Coord2 = std::pair<Coord, Coord>;
+using Coord_v = std::vector <Coord>;
 
 struct FCoord : public T_Coord <float> {
 	using T_Coord <float>::T_Coord;

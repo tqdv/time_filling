@@ -7,6 +7,8 @@ using std::list;
 using std::next;
 #include "hexagon_ops.hpp"
 // link_betweet …
+#include "rng.hpp"
+// randbool
 #include "utils.hpp"
 
 namespace t_fl {
@@ -35,16 +37,10 @@ list<Itinerary> get_itinerary
 	 * + two consecutive $hexs are neighbours
 	 */
 	int n = hexs.size();
-
-using std::cout;
-cout << "Before loop\n";
-
 	list <Itinerary> l;
-	
 
 	HexPoint f = from;  // Used in the loop
 	for (int i = 0; i+1 < n; i++) {
-cout << "Filling itineraries\n";
 		Itinerary &elt = l.emplace_back (Itinerary (hexs[i]));
 		elt.ends.from = f;
 		f = assign_next_bridge (hexs, l);
@@ -66,24 +62,111 @@ cout << "Filling itineraries\n";
 }
 
 
-/* Rules to simplify the hexagons */
+Node_v node_path (Node from, Node to) {
+	/* We assume from != to and neither are the middle one */
+	Node_v path (7);
+	path.front() = from;
+	path.back() = to;
 
-list <Hexagon> simplify_hex (cr <Itinerary> itin) {
-	int n = itin.hex.size;
+	// Hardcoded solution
+	int n = 6; // modulo n
 
-	/* Hexagon size = n -> n - 2
-	 * (have the most lines on the outer to highlight the contour) */
-	if (n >= 2) {
-		return simplify_hex2 (itin);
-	}
+	int distance = (from - to + n) % n;
+	// direction of (from -> to)
+	int direction = (from + distance == to ? 1 : n - 1);
+	int oppdir = (n - direction);  // positive so % works correctly
+	static const int HEX_CENTER = 6; // cf. node_coord defined in hexagon.hpp
 
-	/* Hexagon size = n -> n - 1 */
-	return simplify_hex1 (itin);
+
+	switch (distance) {
+	case 1:
+		/* /\/\
+		 * \  /
+		 */
+		path[1] = (from + oppdir) % n;
+		path[2] = (path[1] + oppdir) % n;
+		path[3] = HEX_CENTER;
+		path[4] = (path[2] + oppdir) % n;
+		path[5] = (path[4] + oppdir) % n;
+
+		break;
+
+	case 2:
+		/* Randomly decide whether to go
+		 *         __
+		 * /_/\    _ \
+		 *  __/ or \\/
+		 */
+		if (randbool ()) {
+			path[1] = (from + direction) % n;
+			path[2] = HEX_CENTER;
+			path[3] = (from + oppdir) % n;
+			path[4] = (path[3] + oppdir) % n;
+			path[5] = (path[4] + oppdir) % n;
+		} else {
+			path[1] = (from + oppdir) % n;
+			path[2] = (path[1] + oppdir) % n;
+			path[3] = (path[2] + oppdir) % n;
+			path[4] = HEX_CENTER;
+			path[5] = (from + direction) % n;
+		}
+		break;
+
+	case 3:
+		/* Randomly decide to first go following direction, or the opposite */
+		/* /‾/    \‾\
+		 *  /_/  \_\
+		 */
+		if (randbool ()) {
+			path[1] = (from + direction) % n;
+			path[2] = (path[1] + direction) % n;
+			path[3] = HEX_CENTER;
+			path[4] = (from + oppdir) % n;
+			path[5] = (path[4] + oppdir) % n;
+		} else {
+			path[1] = (from + oppdir) % n;
+			path[2] = (path[1] + oppdir) % n;
+			path[3] = HEX_CENTER;
+			path[4] = (from + direction) % n;
+			path[5] = (path[4] + direction) % n;
+		}
+		break;
+	} // switch
+
+	return path;
 }
 
-std::list <Hexagon> simplify_hex1 (cr <Itinerary> itin) {
-	// WIP
+list <Itinerary> simple_path (cr <Itinerary> itin) {
+	Hexagon center = itin.hex.smaller ();
+	int size = center.size;
+	Hexagon start = Hexagon (itin.ends.from, size);
+	Hexagon end = Hexagon (itin.ends.to, size);
+	Node from = node_coord (start - center);
+	Node to = node_coord (end - center);
 
+	Hexagon_v hexs = hex_coord (center, coord_node (node_path (from, to)));
+
+	return get_itinerary (hexs, itin.ends.from, itin.ends.to);
 }
+
+///* Rules to simplify the hexagons */
+//
+//list <Hexagon> simplify_hex (cr <Itinerary> itin) {
+//	int n = itin.hex.size;
+//
+//	/* Hexagon size = n -> n - 2
+//	 * (have the most lines on the outer to highlight the contour) */
+//	if (n >= 2) {
+//		return simplify_hex2 (itin);
+//	}
+//
+//	/* Hexagon size = n -> n - 1 */
+//	return simplify_hex1 (itin);
+//}
+//
+//std::list <Hexagon> simplify_hex1 (cr <Itinerary> itin) {
+//	// WIP
+//
+//}
 
 } // namespace t_fl

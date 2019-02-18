@@ -103,12 +103,5 @@ HexPoint2 link_between (cr <Hexagon> left, cr <Hexagon> right) {
 }
 
 
-list <Itinerary> simple_path (cr <Itinerary> itin) {
-	Hexagon center = itin.hex.lower ();
-	Hexagon start = Hexagon (itin.ends.from, center.size);
-	hexagon end = Hexagon (itin.ends.to, center.size);
-	// WIP
-}
-
 } // namespace t_fl
 

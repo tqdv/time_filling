@@ -17,8 +17,9 @@ I might use `time_filling.l.hpp` one day.
 ### Files
 
 * utils.hpp: Currently only defines `cr <>`
-* point: Defines Poit, Coord, and HexPoint and their operations
+* point: Defines Point, Coord, and HexPoint and their operations
 * hexagon: Defines Hexagon (et al.) which is the main data structure
+  Also defines Node.
 * hexagon\_ops: Functions which operate on hexagons
 * itinerary: Defines Itinerary and Endpoints, which are used for the path
 * rng: Implements the (header) global RNG

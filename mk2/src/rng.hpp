@@ -12,6 +12,7 @@ static RNG rng = init_rng();
 
 /* Random integer in [a, b] */
 int randint (int a, int b);
+bool randbool ();
 
 } // namespace t_fl
 

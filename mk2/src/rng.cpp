@@ -15,4 +15,9 @@ int randint (int a, int b) {
 	return dis(rng);
 }
 
+bool randbool () {
+	static std::bernoulli_distribution dis(0.5);
+	return dis(rng);
+}
+
 } // namespace t_fl

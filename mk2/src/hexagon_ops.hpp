@@ -26,8 +26,6 @@ Hexagon_v2 closer_hexs (cr <Hexagon>, cr <Hexagon>);
 /* Finds a pair of Hexpoints that make a bridge between $left and $right */
 HexPoint2 link_between (cr <Hexagon> left, cr <Hexagon> right);
 
-std::list <Itinerary> simple_path (cr <Itinerary>);
-
 } // namespace t_fl
 
 #endif // HEXAGON_OPS_HPP

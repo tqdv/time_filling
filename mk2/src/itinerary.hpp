@@ -10,6 +10,9 @@ struct Endpoints {
 	HexPoint from;
 	HexPoint to;
 
+	Endpoints ();
+	Endpoints (HexPoint, HexPoint);
+
 	bool is_loop () const;
 };
 

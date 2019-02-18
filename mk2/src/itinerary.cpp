@@ -3,6 +3,11 @@
 namespace t_fl {
 
 /* Endpoints */
+Endpoints::Endpoints () { }
+
+Endpoints::Endpoints (HexPoint f, HexPoint t) : from (f), to (t) { }
+
+
 bool Endpoints::is_loop () const {
 	return from == to;
 }

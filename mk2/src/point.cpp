@@ -44,6 +44,16 @@ Coord::Coord (HexPoint p) : T_Coord<int> (p.x, p.y) { }
 
 Coord::Coord (T_Coord <int> c) : T_Coord <int> (c) { }
 
+Coord::Coord (FCoord f) {
+	const auto &[x, y] = f;
+	// std::round rounds normally, with halfways rounding away from zero
+	// eg. -0.5 -> -1
+	// This is always correct if the real number type represents
+	// the integers rounded to precisely.
+	*this = Coord ((int) round (x), (int) round (y));
+}
+
+
 Coord::operator HexPoint () {
 	const auto &[x, y] = *this;
 	return HexPoint (x, y);
@@ -66,16 +76,6 @@ int norm (cr <Coord> c) {
 
 int dist (cr <Coord> left, cr <Coord> right) {
 	return norm (left - right);
-}
-
-/* FCoord */
-
-FCoord::FCoord (T_Coord <float> c) : T_Coord <float> (c) { }
-
-FCoord::operator Coord () {
-	const auto &[x, y] = *this;
-	// C++ rounds towards zero apparently. Hopefully this works
-	return Coord ((int) (x+ 0.5), (int) (y + 0.5));
 }
 
 

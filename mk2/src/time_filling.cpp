@@ -5,6 +5,11 @@ using std::vector;
 using std::list;
 #include <iterator>
 using std::next;
+#include <algorithm>
+using std::transform;
+using std::min;
+#include <cmath>
+using std::abs;
 #include "hexagon_ops.hpp"
 // link_betweet …
 #include "rng.hpp"
@@ -71,9 +76,11 @@ Node_v node_path (Node from, Node to) {
 	// Hardcoded solution
 	int n = 6; // modulo n
 
-	int distance = (from - to + n) % n;
+	/* In mod, abs (x) = y has two solutions: x = y and x = n - y */
+	int n_dist = abs (to - from) % n; // "normal" distance
+	int distance = min (n_dist, n - n_dist);
 	// direction of (from -> to)
-	int direction = (from + distance == to ? 1 : n - 1);
+	int direction = ((from + distance) % n == to ? 1 : n - 1);
 	int oppdir = (n - direction);  // positive so % works correctly
 	static const int HEX_CENTER = 6; // cf. node_coord defined in hexagon.hpp
 

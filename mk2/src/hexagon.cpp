@@ -99,7 +99,7 @@ Hexagon Hexagon::bigger () const {
 	const auto &[cx, cy] = inv;
 
 	FCoord c = x * cx + y * cy;
-	return Hexagon ((Coord) c, s);
+	return Hexagon (Coord (c), s);
 }
 
 Hexagon::operator HexPoint () {

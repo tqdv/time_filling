@@ -3,12 +3,18 @@
 #include <cmath>
 using std::sqrt;
 using std::abs;
+using std::round;
 #include <algorithm>
 using std::min;
+using std::transform;
+#include <list>
+using std::list;
 
 namespace t_fl {
 
 /* Point */
+
+Point::Point () { }
 
 Point::Point (Real x, Real y) : x(x), y(y) { }
 
@@ -34,10 +40,21 @@ bool operator== (cr <HexPoint> left, cr <HexPoint> right) {
 	return left.x == right.x && left.y == right.y;
 }
 
+list <Point> point_hexpoint (list <HexPoint> hp) {
+	list <Point> p (hp.size ());
+	transform (hp.begin(), hp.end(), p.begin(),
+		[] (HexPoint p) { return (Point) p; });
+	return p;
+}
+
 /* T_Coord */
 
 // See the same section in *.tpp
-//
+
+/* FCoord */
+
+FCoord::FCoord (T_Coord <float> c) : T_Coord <float> (c) { }
+
 /* Coord */
 
 Coord::Coord (HexPoint p) : T_Coord<int> (p.x, p.y) { }

@@ -46,7 +46,7 @@ struct Hexagon {
 	Hexagon bigger () const;
 
 	/* Converts the center to a HexPoint */
-	operator HexPoint();
+	explicit operator HexPoint();
 };
 
 Coord operator- (Hexagon, Hexagon);

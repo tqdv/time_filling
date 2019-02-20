@@ -4,6 +4,7 @@
 #include <utility> // std::pair
 #include <ostream> // friend std::ostream
 #include <vector> // Coord_v
+#include <list> // point_hexpoint
 #include "utils.hpp"
 
 namespace t_fl {
@@ -14,6 +15,7 @@ struct Point {
 	Real x;
 	Real y;
 
+	Point ();
 	Point (Real, Real);
 	friend std::ostream& operator<< (std::ostream&, cr<Point>);
 };
@@ -33,6 +35,8 @@ struct HexPoint {
 };
 bool operator== (cr <HexPoint>, cr <HexPoint>);
 
+/* Non-member equivalent of HexPoint -> Point conversion */
+std::list <Point> point_hexpoint (std::list <HexPoint>);
 
 /* The difference between T_Coord and HexPoint is that the former represents
  * coordinates in any 2D basis, whereas HexPoint represents them

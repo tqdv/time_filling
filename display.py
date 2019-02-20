@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
+
 import sys
 import matplotlib
 matplotlib.use ("Gtk3Cairo")
 import matplotlib.pyplot as plt
 
-data = eval(next(sys.stdin))
+data = eval(sys.stdin.read ())
 
 X = []
 Y = []

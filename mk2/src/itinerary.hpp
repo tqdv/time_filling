@@ -25,6 +25,8 @@ struct Itinerary {
 	Itinerary (Hexagon, Endpoints);
 	Itinerary (Hexagon);
 
+	operator Hexagon ();
+
 	/* Check if the itinerary makes you return to your starting point */
 	bool is_loop() const;
 };

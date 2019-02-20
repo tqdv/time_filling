@@ -18,6 +18,10 @@ Itinerary::Itinerary (Hexagon h, Endpoints e) : hex(h), ends(e) { }
 
 Itinerary::Itinerary (Hexagon h) : hex(h) { }
 
+Itinerary::operator Hexagon () {
+	return hex;
+}
+
 bool Itinerary::is_loop () const {
 	return hex.size != 0 && ends.is_loop ();
 }

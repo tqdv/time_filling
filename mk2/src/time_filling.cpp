@@ -143,7 +143,9 @@ Node_v node_path (Node from, Node to) {
 	return path;
 }
 
-list <Itinerary> simple_path (cr <Itinerary> itin) {
+/* Rules to simplify the hexagons */
+
+Hexagon_v simplify_hex1 (cr <Itinerary> itin) {
 	Hexagon center = itin.hex.smaller ();
 	int size = center.size;
 	Hexagon start = Hexagon (itin.ends.from, size);
@@ -153,27 +155,72 @@ list <Itinerary> simple_path (cr <Itinerary> itin) {
 
 	Hexagon_v hexs = hex_coord (center, coord_node (node_path (from, to)));
 
+	return hexs;
+}
+
+Hexagon_v simplify_hex2 (cr <Itinerary> itin) {
+	// TODO
+}
+
+Hexagon_v outline2_hex (cr <Itinerary> itin) {
+	int n = itin.hex.size;
+
+	/* Hexagon size = n -> n - 2
+	 * (have the most lines on the outer to highlight the contour) */
+	if (n >= 2) {
+		return simplify_hex2 (itin);
+	}
+
+	/* Hexagon size = n -> n - 1 */
+	return simplify_hex1 (itin);
+}
+
+/* Path breakers */
+
+list <Itinerary> simple_path (cr <Itinerary> itin) {
+	Hexagon_v hexs = simplify_hex1 (itin);
+
 	return get_itinerary (hexs, itin.ends.from, itin.ends.to);
 }
 
-///* Rules to simplify the hexagons */
-//
-//list <Hexagon> simplify_hex (cr <Itinerary> itin) {
-//	int n = itin.hex.size;
-//
-//	/* Hexagon size = n -> n - 2
-//	 * (have the most lines on the outer to highlight the contour) */
-//	if (n >= 2) {
-//		return simplify_hex2 (itin);
-//	}
-//
-//	/* Hexagon size = n -> n - 1 */
-//	return simplify_hex1 (itin);
-//}
-//
-//std::list <Hexagon> simplify_hex1 (cr <Itinerary> itin) {
-//	// WIP
-//
-//}
+list <Itinerary> outline2_path (cr <Itinerary> itin) {
+	Hexagon_v hexs = outline2_hex (itin);
+
+	return get_itinerary (hexs, itin.ends.from, itin.ends.to);
+
+}
+
+void replace_elt
+(list <Itinerary> &l, list <Itinerary>::iterator &it, list <Itinerary> repl) {
+	l.insert (it, repl.begin(), repl.end());
+	l.erase (it);
+}
+
+list <HexPoint> rec_simple_path (Hexagon_v hexs, HexPoint from, HexPoint to) {
+	list <Itinerary> l = get_itinerary (hexs, from, to);
+	bool are_all_hex = false;
+	while (!are_all_hex) {
+		are_all_hex = true;
+		list <Itinerary>::iterator elt = l.begin();
+		list <Itinerary>::iterator nelt; // next elt
+
+		while (elt != l.end()) {
+			nelt = next (elt); // Needed because we invalidate elt
+			if (elt->hex.size != 0) {
+				are_all_hex = false;
+				replace_elt (l, elt, simple_path (*elt));
+			}
+			elt = nelt;
+		}
+	}
+
+	list <HexPoint> p (l.size ());
+	transform (l.begin(), l.end(), p.begin(),
+		[] (Itinerary i) { return HexPoint (Hexagon (i)); });
+
+	return p;
+}
+
+
 
 } // namespace t_fl

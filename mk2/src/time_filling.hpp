@@ -7,7 +7,6 @@
 #include "itinerary.hpp"
 #include "utils.hpp"
 
-
 namespace t_fl {
 
 /* Helper function for the next one */
@@ -21,12 +20,32 @@ std::list<Itinerary> get_itinerary (Hexagon_v, HexPoint, HexPoint);
 Node_v node_path (Node, Node);
 
 /* Finds a simple (hardcoded) path through a hexagon */
+Hexagon_v simplify_hex1 (cr <Itinerary> itin);
+
+/* Breaks the hexagon down 2 levels so it can highlight
+ * the *-1 hexagon outlines */
+Hexagon_v simplify_hex2 (cr <Itinerary> itin);
+
+
+/* Chooses simplify_hex{1,2} depending on itin.hex.size */
+Hexagon_v outline2_hex (cr <Itinerary> itin);
+
+
+/* Breaks down one level */
 std::list <Itinerary> simple_path (cr <Itinerary>);
 
-/* Rules on how to break down the itineraries into smaller pieces */
-std::list <Hexagon> simplify_hex (cr <Itinerary> itin);
-std::list <Hexagon> simplify_hex1 (cr <Itinerary> itin);
-std::list <Hexagon> simplify_hex2 (cr <Itinerary> itin);
+/* Breaks down 1 or 2 levels, while trying to outline hexagons with
+ * simplify_hex2 */
+std::list <Itinerary> outline2_path (cr <Itinerary> itin);
+
+
+/* Helper function to work with Itinerary lists */
+/* Replaces it with repl in l, which invalidates it, and adds stuff to l */
+void replace_elt
+(std::list <Itinerary> &l, std::list<Itinerary>::iterator &it, std::list <Itinerary> repl);
+
+/* Solve the god damn problem */
+std::list <HexPoint> rec_simple_path (Hexagon_v hexs, HexPoint from, HexPoint to);
 
 }  // namespace t_fl
 

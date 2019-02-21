@@ -14,6 +14,12 @@ I use `std::pair` quite a bit (defined in `<utility>`).
 
 I might use `time_filling.l.hpp` one day.
 
+### Things to prove
+
+* Why an itinerary always exists (cf. `get_itinerary`)
+* Why rounding to convert a Hexagon to a size higher works with
+  the normal distance and not the HexPoint specific distance (cf. `hexagon`)
+
 ### Files
 
 * `utils.hpp`: Currently only defines `cr <>`

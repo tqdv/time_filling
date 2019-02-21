@@ -16,14 +16,14 @@ I might use `time_filling.l.hpp` one day.
 
 ### Files
 
-* utils.hpp: Currently only defines `cr <>`
-* point: Defines Point, Coord, and HexPoint and their operations
-* hexagon: Defines Hexagon (et al.) which is the main data structure
+* `utils.hpp`: Currently only defines `cr <>`
+* `point`: Defines Point, Coord, and HexPoint and their operations
+* `hexagon`: Defines Hexagon (et al.) which is the main data structure
   Also defines Node.
-* hexagon\_ops: Functions which operate on hexagons
-* itinerary: Defines Itinerary and Endpoints, which are used for the path
-* rng: Implements the (header) global RNG
-* time\_filling: General logic
+* `hexagon_ops`: Functions which operate on hexagons
+* `itinerary`: Defines Itinerary and Endpoints, which are used for the path
+* `rng`: Implements the (header) global RNG
+* `time_filling`: General logic
 
 [space filling]: https://en.wikipedia.org/wiki/Space-filling_curve
 [locality hashing]: https://en.wikipedia.org/wiki/Locality-sensitive_hashing#Locality-preserving_hashing

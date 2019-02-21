@@ -23,7 +23,22 @@ Itinerary::operator Hexagon () {
 }
 
 bool Itinerary::is_loop () const {
-	return hex.size != 0 && ends.is_loop ();
+	if (hex.size == 0) { return false; }
+
+	bool r = false;
+
+	Hexagon a = Hexagon (ends.from);
+	Hexagon b = Hexagon (ends.to);
+	// Deal with loops on all levels beneath the hexagon
+	for (int i = 0; i <= hex.size -1; i++) {
+		if (a == b) {
+			r = true;
+		}
+		a = a.bigger();
+		b = b.bigger();
+	}
+
+	return r;
 }
 
 } // namespace t_fl

@@ -121,6 +121,10 @@ Hexagon operator+ (Hexagon h, Coord c) {
 }
 Hexagon operator+ (Coord c, Hexagon h) { return h + c; }
 
+bool operator== (Hexagon a, Hexagon b) {
+	return a.center == b.center && a.size == b.size;
+}
+
 Hexagon hex_coord (cr <Hexagon> h, cr <Coord> c) {
 	return h + c;
 }

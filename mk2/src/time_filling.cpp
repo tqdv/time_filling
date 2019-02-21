@@ -43,25 +43,24 @@ list<Itinerary> get_itinerary
 	 */
 	int n = hexs.size();
 	list <Itinerary> l;
+	bool valid = false; // Validity of the itinerary (does it have loops ?)
+	// A valid itinerary always exists… probably
+	do {
+		l.clear();
 
-	HexPoint f = from;  // Used in the loop
-	for (int i = 0; i+1 < n; i++) {
-		Itinerary &elt = l.emplace_back (Itinerary (hexs[i]));
+		HexPoint f = from;  // Used in the loop
+		for (int i = 0; i+1 < n; i++) {
+			Itinerary &elt = l.emplace_back (Itinerary (hexs[i]));
+			elt.ends.from = f;
+			f = assign_next_bridge (hexs, l);
+		}
+
+		Itinerary &elt = l.emplace_back (Itinerary (hexs.back()));
 		elt.ends.from = f;
-		f = assign_next_bridge (hexs, l);
-	}
+		elt.ends.to = to;
 
-	Itinerary &elt = l.emplace_back (Itinerary (hexs.back()));
-	elt.ends.from = f;
-	elt.ends.to = to;
-
-	/* Previous comment:
-	// Make sure the last itinerary isn't a loop
-	 * Actually, scrap that, too much of a hassle because if it works, but
-	 * turns the one before it into a loop, you have to throw everything away
-	 * and start again.
-	 * Deterministic algorithms, yay
-	 */
+	valid = !elt.is_loop(); // Make sure the last itinerary isn't a loop
+	} while (valid);
 
 	return l;
 }

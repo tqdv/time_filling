@@ -52,6 +52,7 @@ struct Hexagon {
 Coord operator- (Hexagon, Hexagon);
 Hexagon operator+ (Hexagon, Coord);
 Hexagon operator+ (Coord, Hexagon);
+bool operator== (Hexagon, Hexagon);
 
 
 using Hexagon_v = std::vector<Hexagon>;

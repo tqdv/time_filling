@@ -7,6 +7,12 @@ And you want it to draw hexagons.
 Even more, you want it to preserve [locality][locality hashing].  
 And maybe a few aesthetic choices.
 
+## Limitations
+
+You can't place hexagons of any size wherever you please. They can only
+be placed on a specific grid. I don't think I'll ever fix that as I don't
+use that feature.
+
 ## Development overview
 
 I use C++17.  

@@ -60,7 +60,7 @@ list<Itinerary> get_itinerary
 		elt.ends.to = to;
 
 	valid = !elt.is_loop(); // Make sure the last itinerary isn't a loop
-	} while (valid);
+	} while (!valid);
 
 	return l;
 }

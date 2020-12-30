@@ -6,7 +6,7 @@ Idea: a week is 7 days, and a group of 7 hexagons just happens to form a bigger 
 
 The project is called time\_filling as a reference to space filling curves such as the Hilbert curve.
 
-The actual code which is written in Rust, and the actual build instructions are in [mk3/](mk3/README). The rest is old attempts that weren't documented well enough, so I just gave up
+The actual code which is written in Rust, and the actual build instructions are in [mk3/](mk3/). The rest is old attempts that weren't documented well enough, so I just gave up
 
 The conclusion is that hexagons are pretty, but it's less readable than the normal square grid.
 
